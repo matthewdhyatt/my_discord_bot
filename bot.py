@@ -1,7 +1,7 @@
 # https://github.com/Rapptz/discord.py/blob/async/examples/reply.py
 import discord
 
-TOKEN = 'NDQyODEyMTI5ODcyMDUyMjI1.DdERKw.-L130qG6A1pMKIq8xK7Az8oqnpo'
+TOKEN =
 
 client = discord.Client()
 
