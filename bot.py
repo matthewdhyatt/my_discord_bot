@@ -5,7 +5,7 @@ import os
 #token=os.environ['TOKEN']
 #os.environ.get('TOKEN')
 
-client = discord.Client('NDQyODEyMTI5ODcyMDUyMjI1.DdHsIQ.xZAZaPRYvIpJh-wOCuo1CgkvJU8')
+client = discord.Client()
 
 @client.event
 async def on_message(message):
