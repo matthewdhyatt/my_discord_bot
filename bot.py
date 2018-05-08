@@ -2,10 +2,10 @@
 import discord
 import os
 
-token=os.environ['TOKEN']
+#token=os.environ['TOKEN']
 #os.environ.get('TOKEN')
 
-client = discord.Client(token)
+client = discord.Client('NDQyODEyMTI5ODcyMDUyMjI1.DdHsIQ.xZAZaPRYvIpJh-wOCuo1CgkvJU8')
 
 @client.event
 async def on_message(message):
@@ -24,4 +24,4 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-client.run(token)
+client.run('NDQyODEyMTI5ODcyMDUyMjI1.DdHsIQ.xZAZaPRYvIpJh-wOCuo1CgkvJU8')
