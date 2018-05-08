@@ -1,5 +1,6 @@
 # https://github.com/Rapptz/discord.py/blob/async/examples/reply.py
 import discord
+import os
 
 client = discord.Client(TOKEN)
 
