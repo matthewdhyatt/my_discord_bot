@@ -4,7 +4,7 @@ import json
 
 # Set up config variables
 with open("config/config.json") as cfg:
-config = json.load(cfg)
+    config = json.load(cfg)
 
 TOKEN = config["TOKEN"]
 client = discord.Client(TOKEN)
