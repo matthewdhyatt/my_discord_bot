@@ -1,9 +1,7 @@
 # https://github.com/Rapptz/discord.py/blob/async/examples/reply.py
 import discord
 
-TOKEN =
-
-client = discord.Client()
+client = discord.Client(TOKEN)
 
 @client.event
 async def on_message(message):
