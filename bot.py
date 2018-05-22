@@ -153,6 +153,32 @@ async def on_message(message):
         else:
             msg = 'Sorry, you don\'t have clearance to clear the roster, Clarence. Please ask someone with role {}.'.format(wsclear_roles)
 
+    #indiviually mention everybody on the server, please use this sparingly!!!
+    elif message.content.startswith(prefix+'everybody'):
+        for role in message.author.roles:
+            if role.name in wsclear_roles:
+                msg = ''
+                for member in message.server.members:
+                    msg += member.mention+' '
+                break
+        else:
+            msg = 'Sorry, you don\'t have clearance to use this command. Please ask someone with role {}.'.format(wsclear_roles)
+    
+    #Individually mention everybody on ws roster. In next update this should actually create a role and add players to it.
+    elif message.content.startswith(prefix+'wsmention'):
+        for role in message.author.roles:
+            if role.name in wsclear_roles:
+                dbopen()
+                cur.execute('SELECT memberid FROM server{} WHERE ws_joined = True;'.format(message.server.id))
+                ws_roster=list(cur.fetchall())
+                dbclose()
+                msg = ''
+                for memberid in ws_roster:
+                    msg += message.server.get_member(memberid[0]).mention + ' '
+                break
+        else:
+            msg = 'Sorry, you don\'t have clearance to use this command. Please ask someone with role {}.'.format(wsclear_roles)
+    
     #print the current white star roster    
     elif message.content.startswith(prefix+'wswho'):
         dbopen()
