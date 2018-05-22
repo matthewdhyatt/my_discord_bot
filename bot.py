@@ -160,7 +160,7 @@ async def on_message(message):
                 msg = ''
                 for member in message.server.members:
                     msg += member.mention+' '
-                    break
+                break
         else:
             msg = 'Sorry, you don\'t have clearance to use this command. Please ask someone with role {}.'.format(wsclear_roles)
     
@@ -175,7 +175,7 @@ async def on_message(message):
                 msg = ''
                 for memberid in ws_roster:
                     msg += message.server.get_member(memberid[0]).mention + ' '
-                    break
+                break
         else:
             msg = 'Sorry, you don\'t have clearance to use this command. Please ask someone with role {}.'.format(wsclear_roles)
     
