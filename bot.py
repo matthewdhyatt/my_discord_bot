@@ -75,8 +75,19 @@ async def on_ready():
         print('')
         '''
 
+        #create a role for all people currently playing the white star
+        for x in server.roles:
+            if x.name=='WSplaying':
+                break
+        else:
+            try:
+                await client.create_role(server,name='WSplaying',mentionable=True)
+            except:
+                print('bot does not have role permissions on server {}'.format(server))
+
     conn.commit()
     dbclose()
+
 
 
         
@@ -118,8 +129,14 @@ async def on_message(message):
                 SQL=sql.SQL('UPDATE {} SET ws_joined = True, ws_join_time = %s WHERE memberid = %s').format(tablename)
                 cur.execute(SQL,(datetime.now(),candidate.id))
                 conn.commit()
+                try:
+                    role=discord.utils.get(candidate.server.roles, name="WSplaying")
+                    await client.add_roles(candidate,role)
+                except:
+                    pass
                 msg = '{0.mention} has been added to the White Star roster!'.format(candidate)
             dbclose()
+            
         
     #remove yourself or someone else from the roster for the next white star mission :(
     elif message.content.startswith(prefix+'unjoin'):
@@ -136,6 +153,11 @@ async def on_message(message):
                 SQL=sql.SQL('UPDATE {} SET ws_joined = False, ws_join_time = NULL, wsgear = NULL WHERE memberid = %s').format(tablename)
                 cur.execute(SQL,(candidate.id,))
                 conn.commit()
+                try:
+                    role=discord.utils.get(candidate.server.roles, name="WSplaying")
+                    await client.remove_roles(candidate,role)
+                except:
+                    pass
                 msg = '{0.mention} has been removed from the White Star roster'.format(candidate)
             dbclose()
             
@@ -143,6 +165,13 @@ async def on_message(message):
     elif message.content.startswith(prefix+'wsclear'):
         for role in message.author.roles:
             if role.name in wsclear_roles:
+                for user in message.server.members:
+                    try:
+                        role=discord.utils.get(message.server.roles, name="WSplaying")
+                        await client.remove_roles(user,role)
+                    except:
+                        pass
+                    
                 dbopen()
                 SQL=sql.SQL('UPDATE {} SET ws_joined = %s, ws_join_time = NULL, wsgear = NULL').format(tablename)
                 cur.execute(SQL,(False,))
