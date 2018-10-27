@@ -85,9 +85,9 @@ async def on_ready():
                     await client.create_role(server,name=newrole,mentionable=True)
                 except:
                     print('bot does not have role permissions on server {}'.format(server))
-        create_role('WSplaying')
-        create_role('Offense')
-        create_role('Defense')
+        #create_role('WSplaying')
+        #create_role('Offense')
+        #create_role('Defense')
 
     conn.commit()
     dbclose()
