@@ -76,6 +76,7 @@ async def on_ready():
         '''
 
         #create a role for all people currently playing the white star
+        '''
         def create_role(newrole):
             for x in server.roles:
                 if x.name==newrole:
@@ -88,6 +89,7 @@ async def on_ready():
         #create_role('WSplaying')
         #create_role('Offense')
         #create_role('Defense')
+        '''
 
     conn.commit()
     dbclose()
