@@ -76,14 +76,18 @@ async def on_ready():
         '''
 
         #create a role for all people currently playing the white star
-        for x in server.roles:
-            if x.name=='WSplaying':
-                break
-        else:
-            try:
-                await client.create_role(server,name='WSplaying',mentionable=True)
-            except:
-                print('bot does not have role permissions on server {}'.format(server))
+        def create_role(newrole):
+            for x in server.roles:
+                if x.name==newrole:
+                    break
+            else:
+                try:
+                    await client.create_role(server,name=newrole,mentionable=True)
+                except:
+                    print('bot does not have role permissions on server {}'.format(server))
+        create_role('WSplaying')
+        create_role('Offense')
+        create_role('Defense')
 
     conn.commit()
     dbclose()
@@ -110,6 +114,31 @@ async def on_message(message):
     elif message.content.startswith(prefix+'hello'):
         msg = 'Hello {0.author.mention}'.format(message)
 
+    #join or add someone to a squad
+    elif message.content.startswith(prefix+'squad'):
+        candidate=lookup_member(message)
+        if candidate=='':
+            msg = message.content.split()[1]+' is not on this server'
+        else:
+            try:
+                newrole = message.content.split()[2]
+                if newrole.lower() in ['offense', 'off']:
+                    role = discord.utils.get(candidate.server.roles, name="Offense")
+                    await client.add_roles(candidate,role)
+                    msg = '{0.mention} has been added to the Offense squad!'.format(candidate)
+                elif newrole.lower() in ['defense', 'def']:
+                    role = discord.utils.get(candidate.server.roles, name="Defense")
+                    await client.add_roles(candidate,role)
+                    msg = '{0.mention} has been added to the Defense squad!'.format(candidate)
+                elif newrole.lower() in ['other', 'none']:
+                    role=discord.utils.get(candidate.server.roles, name="Offense")
+                    await client.remove_roles(candidate,role)
+                    role=discord.utils.get(candidate.server.roles, name="Defense")
+                    await client.remove_roles(candidate,role)
+                    msg = '{0.mention} has been removed from the Offense/Defense squads'.format(candidate)
+            except:
+                pass      
+        
     #join or add someone to the roster for the next white star mission!
     elif message.content.startswith(prefix+'join'):
         candidate=lookup_member(message)
