@@ -60,7 +60,7 @@ async def on_ready():
     for server in client.guilds:
         #print(server)
         #print(server.id)
-        tablename=sql.Identifier('server'+server.id)
+        tablename=sql.Identifier('server'+str(server.id))
         #COLUMNS: memberid, ws_joined, ws_join_time, wsgear
         SQL=sql.SQL('CREATE TABLE IF NOT EXISTS {} (memberid varchar PRIMARY KEY, ws_joined boolean, ws_join_time timestamp, wsgear varchar)').format(tablename)
         cur.execute(SQL)
