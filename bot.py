@@ -56,7 +56,8 @@ async def on_ready():
     print('')
 
     dbopen()
-    for server in client.servers:
+    #for server in client.servers:
+    for server in client.guild:
         #print(server)
         #print(server.id)
         tablename=sql.Identifier('server'+server.id)
